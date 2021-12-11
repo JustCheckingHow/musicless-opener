@@ -4,3 +4,4 @@ python-magic
 django-cors-headers
 requests
 beautifulsoup4
+xmlschema
