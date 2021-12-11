@@ -9,6 +9,9 @@ from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from core.signature_validator import SignatureValidator
 from django.middleware.csrf import get_token
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 class Opener(View):
@@ -78,6 +81,7 @@ class FileContents(View):
         return FileResponse(doc.document, content_type='application/xml')
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ChunkedUpload(ChunkedUploadView):
     authentication_classes = []
     permission_classes = []
