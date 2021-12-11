@@ -1,5 +1,6 @@
+import "bootstrap-css-only/css/bootstrap.min.css";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import './App.css';
-
 
 import DropFileInput from '../components/DropFileInput';
 import Layout from '../layouts';

@@ -1,7 +1,6 @@
 import './App.css';
 
 
-import ViewFileInfo from '../components/ViewFileInfo';
 
 function App() {
 
@@ -10,14 +9,9 @@ function App() {
     }
 
     return (
-        <div className="box">
-            <h2 className="header">
-                File type
-            </h2>
-            <ViewFileInfo
-                onFileChange={(files) => onFileChange(files)}
-            />
-        </div>
+        <ViewFileInfo 
+            onFileChange={(files) => onFileChange(files)}
+        />
     );
 }
 
