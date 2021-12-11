@@ -8,9 +8,13 @@ from core.models import Document
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from core.signature_validator import SignatureValidator
+from django.middleware.csrf import get_token
 
 
 class Opener(View):
+
+    def get(self, request):
+        return JsonResponse({'token': get_token(request)})
 
     def post(self, request):
         try:
