@@ -19,7 +19,7 @@ class Opener(View):
 
         for filename, myfile in request.FILES.items():
 
-            document = Document.objects.create(title=filename, document=myfile)
+            document = Document.objects.create(title=myfile.name, document=myfile)
             path = document.document.path
 
             # Reading from file, due to buffer size concerns

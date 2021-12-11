@@ -42,7 +42,7 @@ const DropFileInput = props => {
     const onBtnClick = (e) => {
         const forms = fileList.map(item => {
             let dat = new FormData();
-            dat.append('file', item);
+            dat.append('file_pk', item);
             return (dat);
         })
 
