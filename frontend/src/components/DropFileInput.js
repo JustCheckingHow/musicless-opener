@@ -89,7 +89,6 @@ const DropFileInput = props => {
                         {
                             fileList.map((item, index) => (
                                 <div key={index} className="drop-file-preview__item">
-                                    {/* <img src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt="" /> */}
                                     <div className="drop-file-preview__item__info">
                                         <p>Nazwa: {item.name}</p>
                                         <p>Rozmiar: {item.size}B</p>
