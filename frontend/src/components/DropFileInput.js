@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import './drop-file-input.css';
 
@@ -35,7 +36,19 @@ const DropFileInput = props => {
     }
 
     const onBtnClick = (e) => {
-        // To be implemented
+        console.log(fileList);
+
+        var response = axios.post(
+            'localhost:8000/upload',
+            fileList[0]
+        ).catch((error) => {
+            if (error.request) {
+                // request sent, no response
+            } else if (error.response) {
+                // error response
+            }
+            console.error(error);
+        })
     }
 
     return (
