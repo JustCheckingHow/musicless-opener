@@ -7,6 +7,7 @@ import magic
 from core.models import Document
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
+from core.signature_validator import SignatureValidator
 
 
 class Opener(View):
@@ -43,6 +44,21 @@ class Files(View):
             'valid': doc.valid,
             'real_extension': doc.real_extension,
         })
+
+class Signature(View):
+    def get(self, request, file_pk):
+        response = {}
+        doc = Document.objects.get(pk=file_pk)
+        try:
+            data = SignatureValidator.run(doc)
+            if data:
+                response['signature_status'] = 'OK'
+                response['signature_reports'] = response
+            else:
+                response['signature_status'] = 'Not signed'
+        except Exception as e:
+            response['error'] = str(e)
+        return JsonResponse(response)
 
 
 class FileContents(View):
