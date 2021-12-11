@@ -72,7 +72,7 @@ class Signature(View):
                 if file:
                     response['rip_id'] = file
             except Exception as e:
-                response['file': f'error: {str(e)}']
+                response = {'file': f'error: {str(e)}'}
         return JsonResponse(response)
 
 
