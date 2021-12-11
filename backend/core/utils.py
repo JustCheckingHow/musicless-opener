@@ -30,7 +30,7 @@ def _get_schemas(url):
     schemas = [
         link.get('href')
         for link in links
-        if link.get('href').endswith(('.xsd', '.xsl'))]
+        if link.get('href').endswith('.xsd')]
     schemas = list(map(
         lambda x: url + x[2:] if 'http' not in x else x,
         schemas))
