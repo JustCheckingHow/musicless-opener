@@ -3,7 +3,7 @@ from django.http import JsonResponse, response
 from chunked_upload.views import ChunkedUploadView
 from django.core.files.storage import FileSystemStorage
 # from core.forms import UploadForm
-from django.conf import settings
+from core.utils import schema_check
 import magic
 import os
 
@@ -15,11 +15,15 @@ class Opener(View):
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             path = os.path.join(fs.location, filename)
-            print(magic.from_file(path))
+            magic_data = magic.from_file(path)
+
+            # if magic_data.split()[0].lower() == 'xml':
+            #     schema_check(xml_file=path)
+
+            # fs.delete(path)
+
         return JsonResponse({
-            'extension': magic.from_file(
-                os.path.join(settings.MEDIA_ROOT, filename)),
-            'blob': 'asd'
+            'extension': magic_data,
         })
 
 
