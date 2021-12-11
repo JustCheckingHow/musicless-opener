@@ -39,7 +39,7 @@ const DropFileInput = props => {
         console.log(fileList);
 
         var response = axios.post(
-            'localhost:8000/upload',
+            'localhost:3000/upload',
             fileList[0]
         ).catch((error) => {
             if (error.request) {
@@ -62,7 +62,7 @@ const DropFileInput = props => {
             >
                 <div className="drop-file-input__label">
                     <img src={uploadImg} alt="" />
-                    <p>Sprawdź pliki</p>
+                    <p>Sprawdź plik</p>
                 </div>
                 <input type="file" value="" onChange={onFileDrop}/>
             </div>
@@ -70,7 +70,7 @@ const DropFileInput = props => {
                 fileList.length > 0 ? (
                     <div className="drop-file-preview">
                         <p className="drop-file-preview__title">
-                            Gotowe pliki do sprawdzenia
+                            Gotowy plik do sprawdzenia:
                         </p>
                         {
                             fileList.map((item, index) => (
@@ -85,7 +85,7 @@ const DropFileInput = props => {
                             ))
                         }
                         <button className='drop-file-btn' onClick={onBtnClick}>
-                            Prześlij wybrane pliki
+                            Prześlij plik
                         </button>
                     </div>
                 ) : null
