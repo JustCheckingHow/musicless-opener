@@ -1,5 +1,5 @@
 from django.views.generic import View
-from django.http import JsonResponse
+from django.http import JsonResponse, response
 from chunked_upload.views import ChunkedUploadView
 from django.core.files.storage import FileSystemStorage
 # from core.forms import UploadForm
