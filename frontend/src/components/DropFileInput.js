@@ -12,22 +12,28 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
 
-async function uploadFile(url, chunk, upload_id, fileSize) {
-
-    var body = JSON.stringify({
-        'file': chunk
-    })
+async function uploadFile(url, chunk, upload_id) {
+    var body;
+    if (upload_id !== '') {
+        body = JSON.stringify({
+            'file': chunk,
+            'upload_id': upload_id
+        })
+    }
+    else {
+        body = JSON.stringify({
+            'file': chunk
+        })
+    }
 
     console.log(url);
-
     return await fetch(url, {
-        method: "PUT",
+        method: "POST",
         headers: {
             "Content-Type": "multipart/form-data",
-            "Content-Range": "bytes */" + fileSize,
+            "Content-Range": "bytes 0-" + (chunk.length - 1) + "/" + chunk.length,
         },
-        data: { "filename": "test.txt" },
-        files: { "file": chunk },
+        body: body
     })
         .then(res => res.json())
         .then(
@@ -49,12 +55,15 @@ async function uploadInChunks(url, file) {
             return result.token;
         })
 
+    //set cookie
+    document.cookie = "csrftoken=" + token;
+
     var readEventHandler = function (evt) {
         if (evt.target.error == null) {
             offset += evt.target.result.length;
             // callback(evt.target.result); // callback for handling read chunk
             // console.log(offset);
-            uploadFile(url, evt.target.result, '', fileSize)
+            uploadFile(url, evt.target.result, '')
         } else {
             console.log("Read error: " + evt.target.error);
             return;
@@ -108,7 +117,18 @@ const DropFileInput = props => {
     }
 
     const onBtnClick = (e) => {
-        uploadInChunks(props.upload_endpoint, fileList[0]);
+        // uploadInChunks(props.upload_endpoint, fileList[0]);
+        var response = axios.post(
+            'http://localhost:8000/opener',
+            fileList[0]
+        ).catch((error) => {
+            if (error.request) {
+                // request sent, no response
+            } else if (error.response) {
+                // error response
+            }
+            console.error(error);
+        })
     }
 
     return (
@@ -135,6 +155,7 @@ const DropFileInput = props => {
                         {
                             fileList.map((item, index) => (
                                 <div key={index} className="drop-file-preview__item">
+                                    {/* <img src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt="" /> */}
                                     <div className="drop-file-preview__item__info">
                                         <p>Nazwa: {item.name}</p>
                                         <p>Rozmiar: {item.size}B</p>
