@@ -11,12 +11,13 @@ const match = matchPath("/opener/:id", window.location.pathname);
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 
+
 const ViewFileInfo = props => {
     const [result, setResult] = useState({});
     const [active, setActive] = useState('');
 
     useEffect(() => {
-        if(active==match.params.id)
+        if (active == match.params.id)
             return;
 
         fetch(props.endpoint + "/" + match.params.id)
@@ -46,7 +47,7 @@ const ViewFileInfo = props => {
                             <h3 className="text-center">
                                 <i className="fas fa-file-alt"></i>
                                 &nbsp;&nbsp;&nbsp;
-                                {result.extension}
+                                {result.title}
                             </h3>
                         </MDBCardTitle>
                         <MDBCardBody className="px-3">
@@ -55,7 +56,7 @@ const ViewFileInfo = props => {
                                     <strong>Typ pliku</strong>
                                 </MDBCol>
                                 <MDBCol className="col-8">
-                                    {result.extension}
+                                    {result.real_extension}
                                 </MDBCol>
                             </MDBRow>
                             <MDBRow>
@@ -63,7 +64,7 @@ const ViewFileInfo = props => {
                                     <strong>Poprawność</strong>
                                 </MDBCol>
                                 <MDBCol className="col-8">
-                                    {getValidityString(result.valid_schema)}
+                                    {getValidityString(result.valid)}
                                 </MDBCol>
                             </MDBRow>
                         </MDBCardBody>
@@ -81,7 +82,7 @@ const ViewFileInfo = props => {
                             </h3>
                         </MDBCardTitle>
                         <MDBCardBody className="px-3">
-                            {result.valid_schema ? <MyXmlDocument xmlString={result.xml} /> : <p>Nie wysłano pliku</p>}
+                            {result.valid ? <MyXmlDocument xmlString={result.xml} /> : <p>Plik nieprawidłowy</p>}
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>
