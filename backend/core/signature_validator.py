@@ -63,8 +63,28 @@ class SignatureValidator:
 
             return data
 
+        @staticmethod
+        def is_signed(data):
+            if data.find('<ds:Signature') == -1:
+                return False
+            return True
+
         @classmethod
         def run(cls, file):
-            response = cls.request_validation(file)
-            parsed = cls.parse_response(response)
-            return parsed
+            """Returns signature reports or None
+
+            Args:
+                file (TextIoWrapper): input file
+
+            Returns:
+                list|None: list of two xml reports or None if file isn't signed
+            
+            Raises:
+                A lot of stuff, execute only in try block
+            """
+            if cls.is_signed(file.read()):
+                response = cls.request_validation(file)
+                parsed = cls.parse_response(response)
+                return parsed
+            else:
+                return None
