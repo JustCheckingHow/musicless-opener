@@ -17,7 +17,7 @@ class Opener(View):
     def post(self, request):
         res = {}
 
-        for filename, myfile in request.FILES.items():
+        for file_pk, myfile in request.FILES.items():
 
             document = Document.objects.create(title=myfile.name, document=myfile)
             path = document.document.path
@@ -31,7 +31,7 @@ class Opener(View):
 
             document.save()
 
-            res[filename] = document.pk
+            res[file_pk] = document.pk
 
         if not res:
             return JsonResponse({'error': 'No file was uploaded'})
