@@ -2,5 +2,6 @@ from django.urls import path
 from core import views
 
 urlpatterns = [
-    path(r'open', views.open.as_view(), name='open'),
+    path(r'opener', views.Opener.as_view(), name='opener'),
+    path(r'chunked_upload', views.ChunkedUpload.as_view(), name='chunked_upload'),
 ]
