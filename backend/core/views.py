@@ -15,27 +15,28 @@ from django.views.decorators.csrf import csrf_exempt
 class Opener(View):
 
     def post(self, request):
-        try:
-            filename, myfile = list(request.FILES.items())[0]
-        except IndexError:
-            return JsonResponse({'error': 'No filename was provided'})
+        res = {}
 
-        if not myfile:
+        for filename, myfile in request.FILES.items():
+
+            document = Document.objects.create(title=filename, document=myfile)
+            path = document.document.path
+
+            # Reading from file, due to buffer size concerns
+            magic_data = magic.from_file(path)
+            document.real_extension = magic_data
+
+            if magic_data.split()[0].lower() == 'xml':
+                document.valid, document.template_url, document.xsl_url = is_schema_correct(path)
+
+            document.save()
+
+            res[filename] = document.pk
+
+        if not res:
             return JsonResponse({'error': 'No file was uploaded'})
 
-        document = Document.objects.create(title=filename, document=myfile)
-        path = document.document.path
-
-        # Reading from file, due to buffer size concerns
-        magic_data = magic.from_file(path)
-        document.real_extension = magic_data
-
-        if magic_data.split()[0].lower() == 'xml':
-            document.valid, document.template_url, document.xsl_url = is_schema_correct(path)
-
-        document.save()
-
-        return JsonResponse({'file_pk': document.pk})
+        return JsonResponse(res)
 
 
 class Files(View):
