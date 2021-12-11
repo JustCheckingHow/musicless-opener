@@ -1,7 +1,6 @@
 version: '3'
 
 services:
-
   backend:
     container_name: backend-opener
     image: backend-opener
@@ -38,3 +37,10 @@ services:
       - "./frontend:/app"
     env_file:
       - .env
+
+  mock-api:
+    build: json-mock-api/.
+    volumes:
+      - ./json-mock-api:/app
+    ports:
+      - "3001:3000"

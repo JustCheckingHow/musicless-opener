@@ -10,6 +10,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
+files
 settingsOLD.py
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -217,3 +218,6 @@ fabric.properties
 
 data/*
 *.json
+
+*.xsd
+*.xsl
