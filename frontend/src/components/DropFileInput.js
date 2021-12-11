@@ -67,7 +67,7 @@ const DropFileInput = props => {
                 // console.error(error);
             }).then((response) => {
                 console.log(response);
-                // window.location.href = '/opener/' + response.data.file_pk;
+                window.location.href = '/opener/' + response.data.file_pk;
             })
         }
     }
