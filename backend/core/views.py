@@ -25,7 +25,7 @@ class Opener(View):
         document.real_extension = magic_data
 
         if magic_data.split()[0].lower() == 'xml':
-            document.valid = is_schema_correct(path)
+            document.valid, document.template_url = is_schema_correct(path)
 
         document.save()
         # fs.delete(path)
@@ -42,8 +42,10 @@ class Files(View):
             'title': doc.title,
             'uploaded_at': doc.uploaded_at,
             'valid': doc.valid,
+            'schema_url': doc.template_url,
             'real_extension': doc.real_extension,
         })
+
 
 class Signature(View):
     def get(self, request, file_pk):
