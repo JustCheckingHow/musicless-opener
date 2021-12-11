@@ -40,30 +40,35 @@ const DropFileInput = props => {
     }
 
     const onBtnClick = (e) => {
-        let tmp = new FormData();
-        tmp.append('file', fileList[0]);
-
-        axios.post(
-            'http://localhost:8000/opener',
-            tmp,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }
-        ).catch((error) => {
-            if (error.request) {
-                console.log(error.request);
-                // request sent, no response
-            } else if (error.response) {
-                console.log(error.response);
-
-                // error response
-            }
-            // console.error(error);
-        }).then((response) => {
-            console.log(response);
+        const forms = fileList.map(item => {
+            let dat = new FormData();
+            dat.append('file', item);
+            return (dat);
         })
+
+        for (const item of forms) {
+            axios.post(
+                'http://localhost:8000/opener',
+                item,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).catch((error) => {
+                if (error.request) {
+                    console.log(error.request);
+                    // request sent, no response
+                } else if (error.response) {
+                    console.log(error.response);
+    
+                    // error response
+                }
+                // console.error(error);
+            }).then((response) => {
+                console.log(response);
+            })
+        }
     }
 
     return (
