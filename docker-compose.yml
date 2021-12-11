@@ -7,7 +7,10 @@ services:
     image: backend-opener
     build: ./backend
     hostname: backend
-    command: python manage.py runserver 0.0.0.0:${DOCKER_BACKEND_PORT}
+    command: >
+      sh -c "python manage.py migrate --noinput
+      && python manage.py runserver
+      0.0.0.0:${DOCKER_BACKEND_PORT}"
     ports:
       - "${DOCKER_BACKEND_PORT}:${DOCKER_BACKEND_PORT}"
     volumes:
@@ -15,5 +18,22 @@ services:
     restart: on-failure
     environment:
       - DJANGO_SETTINGS_MODULE=opener.settings
+    env_file:
+      - .env
+
+  frontend:
+    container_name: frontend-opener
+    image: frontend-opener
+    hostname: frontend
+    command: sh -c "HOST=0.0.0.0 PORT=${DOCKER_FRONTEND_PORT} npm start"
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "${DOCKER_FRONTEND_PORT}:${DOCKER_FRONTEND_PORT}"
+    profiles:
+      - dev
+    volumes:
+      - "./frontend:/app"
     env_file:
       - .env
