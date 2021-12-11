@@ -34,6 +34,10 @@ const DropFileInput = props => {
         props.onFileChange(updatedList);
     }
 
+    const onBtnClick = (e) => {
+        // To be implemented
+    }
+
     return (
         <>
             <div
@@ -67,6 +71,9 @@ const DropFileInput = props => {
                                 </div>
                             ))
                         }
+                        <button className='drop-file-btn' onClick={onBtnClick}>
+                            Prześlij wybrane pliki
+                        </button>
                     </div>
                 ) : null
             }

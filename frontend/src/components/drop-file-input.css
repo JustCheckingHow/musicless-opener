@@ -91,3 +91,18 @@
 .drop-file-preview__item:hover .drop-file-preview__item__del {
     opacity: 1;
 }
+
+.drop-file-btn {
+    border-radius: 20px;
+    width: 400px;
+    height: 80px;
+    background-color: var(--input-bg);
+    border: none;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop-file-btn:hover {
+    background-color: var(--border-color);
+}
