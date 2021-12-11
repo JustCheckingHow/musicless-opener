@@ -1,0 +1,139 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Report: {{ doc.title }}</title>
+
+    <style type="text/css" media="all">
+
+        /*
+        *
+        * ==========================================
+        * CUSTOM UTIL CLASSES
+        * ==========================================
+        *
+        */
+        /* Horizontal line */
+        .collapsible-link::before {
+            content: '';
+            width: 14px;
+            height: 2px;
+            background: #333;
+            position: absolute;
+            top: calc(50% - 1px);
+            right: 1rem;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        /* Vertical line */
+        .collapsible-link::after {
+            content: '';
+            width: 2px;
+            height: 14px;
+            background: #333;
+            position: absolute;
+            top: calc(50% - 7px);
+            right: calc(1rem + 6px);
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .collapsible-link[aria-expanded='true']::after {
+            transform: rotate(90deg) translateX(-1px);
+        }
+        
+        .collapsible-link[aria-expanded='true']::before {
+            transform: rotate(180deg);
+        }
+        
+        
+        /*
+        *
+        * ==========================================
+        * FOR DEMO PURPOSES
+        * ==========================================
+        *
+        */
+        body {
+            background: #153243;
+            background: -webkit-linear-gradient(to left bottom, #8B2635, #153243);
+            background: linear-gradient(to left bottom, #8B2635, #153243);
+            min-height: 100vh;
+        }
+  
+
+    </style>
+
+  </head>
+  <body>
+
+    <div class="container">
+        <!-- For demo purpose -->
+        <div class="row py-5">
+          <div class="col-lg-9 mx-auto text-white text-center">
+            <h1 class="display-4">{{doc.title}}</h1>
+            <p class="lead mb-0">{{doc.real_extension}}</p>
+          </div>
+        </div>
+      
+      
+        <div class="row">
+          <div class="col-lg-9 mx-auto">
+            <!-- Accordion -->
+            <div id="accordionExample" class="accordion shadow">
+      
+              <!-- Accordion item 1 -->
+              <div class="card">
+                <div id="headingOne" class="card-header bg-white shadow-sm border-0">
+                  <h6 class="mb-0 font-weight-bold"><a href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="d-block position-relative text-dark text-uppercase collapsible-link py-2">Collapsible Group Item #1</a></h6>
+                </div>
+                <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordionExample" class="collapse show">
+                  <div class="card-body p-5">
+                    <p class="font-weight-light m-0">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.</p>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Accordion item 2 -->
+              <div class="card">
+                <div id="headingTwo" class="card-header bg-white shadow-sm border-0">
+                  <h6 class="mb-0 font-weight-bold"><a href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="d-block position-relative collapsed text-dark text-uppercase collapsible-link py-2">Collapsible Group Item #2</a></h6>
+                </div>
+                <div id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordionExample" class="collapse">
+                  <div class="card-body p-5">
+                    <p class="font-weight-light m-0">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.</p>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Accordion item 3 -->
+              <div class="card">
+                <div id="headingThree" class="card-header bg-white shadow-sm border-0">
+                  <h6 class="mb-0 font-weight-bold"><a href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="d-block position-relative collapsed text-dark text-uppercase collapsible-link py-2">Collapsible Group Item #3</a></h6>
+                </div>
+                <div id="collapseThree" aria-labelledby="headingThree" data-parent="#accordionExample" class="collapse">
+                  <div class="card-body p-5">
+                    <p class="font-weight-light m-0">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.</p>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <script src="./Starter Template for Bootstrap_files/jquery-3.2.1.slim.min.js.pobrane" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+      <script src="./Starter Template for Bootstrap_files/popper.min.js.pobrane"></script>
+      <script src="./Starter Template for Bootstrap_files/bootstrap.min.js.pobrane"></script>
+    
+</body>
+</html>

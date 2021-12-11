@@ -13,7 +13,7 @@ function App() {
 
     return (
         <Layout>
-        <div className="box">
+        <div className="box mx-auto">
             <h2 className="header">
                 Opener
             </h2>

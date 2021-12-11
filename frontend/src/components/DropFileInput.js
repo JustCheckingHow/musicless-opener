@@ -76,7 +76,7 @@ const DropFileInput = props => {
         <>
             <div
                 ref={wrapperRef}
-                className="drop-file-input"
+                className="drop-file-input mx-auto"
                 onDragEnter={onDragEnter}
                 onDragLeave={onDragLeave}
                 onDrop={onDrop}
@@ -89,14 +89,13 @@ const DropFileInput = props => {
             </div>
             {
                 fileList.length > 0 ? (
-                    <div className="drop-file-preview">
-                        <p className="drop-file-preview__title">
+                    <div className="drop-file-preview mx-auto">
+                        <p className="drop-file-preview__title mx-auto">
                             Gotowe pliki do sprawdzenia
                         </p>
                         {
                             fileList.map((item, index) => (
                                 <div key={index} className="drop-file-preview__item">
-                                    {/* <img src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt="" /> */}
                                     <div className="drop-file-preview__item__info">
                                         <p>Nazwa: {item.name}</p>
                                         <p>Rozmiar: {item.size}B</p>
@@ -105,7 +104,7 @@ const DropFileInput = props => {
                                 </div>
                             ))
                         }
-                        <button className='drop-file-btn' onClick={onBtnClick}>
+                        <button className='drop-file-btn mx-auto' onClick={onBtnClick}>
                             Prześlij pliki
                         </button>
                     </div>
