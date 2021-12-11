@@ -53,6 +53,6 @@ def is_schema_correct(xml_file_path):
         except Exception:
             pass
     else:
-        return False
+        return False, None
 
-    return True
+    return True, schema_url
