@@ -7,6 +7,10 @@ import './drop-file-input.css';
 import { ImageConfig } from '../config/ImageConfig'; 
 import uploadImg from '../assets/cloud-upload-regular-240.png';
 
+
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+
 const DropFileInput = props => {
 
     const wrapperRef = useRef(null);
@@ -36,18 +40,29 @@ const DropFileInput = props => {
     }
 
     const onBtnClick = (e) => {
-        console.log(fileList);
+        let tmp = new FormData();
+        tmp.append('file', fileList[0]);
 
-        var response = axios.post(
-            'localhost:8000/upload',
-            fileList[0]
+        axios.post(
+            'http://localhost:8000/opener',
+            tmp,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         ).catch((error) => {
             if (error.request) {
+                console.log(error.request);
                 // request sent, no response
             } else if (error.response) {
+                console.log(error.response);
+
                 // error response
             }
-            console.error(error);
+            // console.error(error);
+        }).then((response) => {
+            console.log(response);
         })
     }
 
