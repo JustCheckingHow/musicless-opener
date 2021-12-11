@@ -1,60 +1,58 @@
+from django.conf import settings
+from bs4 import BeautifulSoup
 import requests
-from bs4 import BeautifulSoup as soup
-import xml.etree.ElementTree as ET
-import codecs
+# import xml.etree.ElementTree as ET
+import xmlschema
+import re
+import os
+
+
+def _get_schema_links(xml_file_path):
+    try:
+        with open(xml_file_path, 'r') as f:
+            content = f.readlines()
+
+        urls = re.findall(
+            r'http[s]?://(?:[a-zA-Z]|[0-9]|'
+            r'[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+            str(content))
+    except UnicodeDecodeError:
+        return []
+
+    return urls
 
 
 def _get_schemas(url):
-    # requests directory listing from http server provided in url
     response = requests.get(url)
-    # parse directory listing
     soup = BeautifulSoup(response.text, 'html.parser')
-    # find all links to schemas
     links = soup.find_all('a')
-    # extract links to schemas
-    schemas = [link.get('href') for link in links if link.get('href').endswith('.xsd')]
+
+    schemas = [
+        link.get('href')
+        for link in links
+        if link.get('href').endswith(('.xsd', '.xsl'))]
+    schemas = list(map(
+        lambda x: url + x[2:] if 'http' not in x else x,
+        schemas))
     return schemas
 
 
-def _get_schema_links(xml_file):
-    # find all links to schemas in xml file
-    tree = ET.parse(xml_file)
-    root = tree.getroot()
-    schemas = root.findall('.//{http://www.w3.org/2001/XMLSchema-instance}schemaLocation')
-    # extract links to schemas
-    schema_links = [schema.text for schema in schemas]
-    print(schema_links)
-    
-    return schema_links
+def is_schema_correct(xml_file_path):
+    schemas = []
+    for url in _get_schema_links(xml_file_path):
+        schemas = [*schemas, *_get_schemas(url)]
 
+    for schema_url in schemas:
+        schema_response = requests.get(schema_url)
+        schema_path = os.path.join(settings.MEDIA_ROOT, 'schema.xsd')
+        open(schema_path, 'wb').write(schema_response.content)
 
+        try:
+            xmlschema.validate(xml_file_path, schema_path)
+            break
+        except Exception:
+            pass
+    else:
+        return False
 
-    # with open(xml_file, 'r', encoding='iso-8859-1') as f:
-    #     xml = f.read()
-    # root = ET.fromstring(xml)
-
-    # # find values in xmls:ed tags
-    # schemas = root.findall('.//xmlns:etd', namespaces={'ed': 'http://crd.gov.pl/xml/schematy'})
-    # print(schemas)
-
-    # # etd_ns = root.findall('./Deklaracja[@class="xmlns:etd"]')
-    # # etd_ns = root.findall('xmlns:etd')
-
-    # print(etd_ns)
-
-    # return etd_ns
-
-
-def schema_check(xml_file):
-    aux = _get_schema_links(xml_file)
-
-    # # split link into schema and location
-    # schema, location = schema_link.split()
-    # # check if schema is valid
-    # try:
-    #     xml_file.schema = location
-    #     xml_file.validate()
-    # except Exception as e:
-    #     print('Schema validation failed: {}'.format(e))
-    #     return False
-    # return True
+    return True
