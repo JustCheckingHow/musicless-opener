@@ -13,7 +13,11 @@ from core.signature_validator import SignatureValidator
 class Opener(View):
 
     def post(self, request):
-        filename, myfile = list(request.FILES.items())[0]
+        try:
+            filename, myfile = list(request.FILES.items())[0]
+        except IndexError:
+            return JsonResponse({'error': 'No filename was provided'})
+
         if not myfile:
             return JsonResponse({'error': 'No file was uploaded'})
 
