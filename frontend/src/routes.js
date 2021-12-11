@@ -7,7 +7,7 @@ import AppPage from './pages/App';
 // import IndexPage from './pages'
 
 class App extends Component {
-	DETAILS_END_POINT = 'http://localhost:3001/file'
+	DETAILS_END_POINT = 'http://localhost:8000/files'
 	render() {
 		return (
 			<Router basename={process.env.PUBLIC_URL}>

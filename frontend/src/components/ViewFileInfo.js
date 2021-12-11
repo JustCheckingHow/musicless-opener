@@ -20,6 +20,7 @@ const ViewFileInfo = props => {
         if (active == match.params.id)
             return;
 
+        console.log(props.endpoint + "/" + match.params.id)
         fetch(props.endpoint + "/" + match.params.id)
             .then(res => res.json())
             .then(

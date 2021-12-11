@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+
 import './drop-file-input.css';
 
 import { ImageConfig } from '../config/ImageConfig'; 
@@ -63,6 +64,7 @@ const DropFileInput = props => {
             // console.error(error);
         }).then((response) => {
             console.log(response);
+            window.location.href = '/opener/' + response.data.file_pk;
         })
     }
 
@@ -77,7 +79,7 @@ const DropFileInput = props => {
             >
                 <div className="drop-file-input__label">
                     <img src={uploadImg} alt="" />
-                    <p>Sprawdź plik</p>
+                    <p>Sprawdź pliki</p>
                 </div>
                 <input type="file" value="" onChange={onFileDrop}/>
             </div>
@@ -85,7 +87,7 @@ const DropFileInput = props => {
                 fileList.length > 0 ? (
                     <div className="drop-file-preview">
                         <p className="drop-file-preview__title">
-                            Gotowy plik do sprawdzenia
+                            Gotowe pliki do sprawdzenia
                         </p>
                         {
                             fileList.map((item, index) => (
@@ -100,7 +102,7 @@ const DropFileInput = props => {
                             ))
                         }
                         <button className='drop-file-btn' onClick={onBtnClick}>
-                            Prześlij plik
+                            Prześlij pliki
                         </button>
                     </div>
                 ) : null
