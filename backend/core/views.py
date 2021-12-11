@@ -58,12 +58,16 @@ class Signature(View):
         response = {}
         doc = Document.objects.get(pk=file_pk)
         try:
-            data = SignatureValidator.run(doc.document)  # I'm not entirely sure whether this is a correct way to get file
-            if data:
-                response['signature_status'] = 'OK'
-                response['signature_reports'] = response
-            else:
-                response['signature_status'] = 'Not signed'
+            if doc.real_extension == 'pdf':
+                pdf_status = SignatureValidator.validate_pdf(doc.document)
+                response['signature_status'] = pdf_status
+            elif doc.real_extension == 'xml':
+                data = SignatureValidator.validate_xml(doc.document)  # I'm not entirely sure whether this is a correct way to get file
+                if data:
+                    response['signature_status'] = 'OK'
+                    response['signature_reports'] = response
+                else:
+                    response['signature_status'] = 'Not signed'
         except Exception as e:
             response['error'] = str(e)
         if data:

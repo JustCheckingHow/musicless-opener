@@ -4,6 +4,7 @@ from lxml import etree
 import base64
 from io import BytesIO
 from core.models import Document
+from endesive import pdf
 
 
 class SignatureValidator:
@@ -74,7 +75,7 @@ class SignatureValidator:
         return True
 
     @classmethod
-    def run(cls, file):
+    def validate_xml(cls, file):
         """Returns signature reports or None
 
         Args:
@@ -109,26 +110,6 @@ class SignatureValidator:
         return True
 
     @classmethod
-    def run(cls, file):
-        """Returns signature reports or None
-
-        Args:
-            file (TextIoWrapper): input file
-
-        Returns:
-            list|None: list of two xml reports or None if file isn't signed
-        
-        Raises:
-            A lot of stuff, execute only in try block
-        """
-        if cls.is_signed(file.read()):
-            response = cls.request_validation(file)
-            parsed = cls.parse_response(response)
-            return parsed
-        else:
-            return None
-    
-    @classmethod
     def rip_file_from_xml(cls, file):
         tree = etree.parse(file)
         root = tree.getroot()
@@ -154,3 +135,13 @@ class SignatureValidator:
         )
 
         return doc.pk
+    
+    @staticmethod
+    def validate_pdf(file):
+        (hashok, signatureok, certok) = pdf.verify(file)
+        return {
+            'hash': hashok,
+            'signature': signatureok,
+            'cert': certok
+        }
+
