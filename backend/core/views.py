@@ -1,13 +1,12 @@
 from django.views.generic import View
 from django.http import JsonResponse
 from chunked_upload.views import ChunkedUploadView
-from django.core.files.storage import FileSystemStorage
 # from core.forms import UploadForm
 from core.utils import is_schema_correct
-from core.forms import DocumentForm
 import magic
-import os
 from core.models import Document
+from django.shortcuts import get_object_or_404
+from django.http import FileResponse
 
 
 class Opener(View):
@@ -36,15 +35,21 @@ class Opener(View):
 class Files(View):
 
     def get(self, request, file_pk):
-        doc = Document.objects.get(pk=file_pk)
+        doc = get_object_or_404(Document, pk=file_pk)
         return JsonResponse({
             'pk': doc.pk,
             'title': doc.title,
-            # 'document': doc.document,
             'uploaded_at': doc.uploaded_at,
             'valid': doc.valid,
             'real_extension': doc.real_extension,
         })
+
+
+class FileContents(View):
+
+    def get(self, request, file_pk):
+        doc = get_object_or_404(Document, pk=file_pk)
+        return FileResponse(doc.document, content_type='application/xml')
 
 
 class ChunkedUpload(ChunkedUploadView):
