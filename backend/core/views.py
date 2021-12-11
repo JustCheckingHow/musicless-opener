@@ -63,7 +63,7 @@ class Signature(View):
         response = {}
         doc = Document.objects.get(pk=file_pk)
         try:
-            data = SignatureValidator.run(doc)
+            data = SignatureValidator.run(doc.document)  # I'm not entirely sure whether this is a correct way to get file
             if data:
                 response['signature_status'] = 'OK'
                 response['signature_reports'] = response
@@ -71,6 +71,14 @@ class Signature(View):
                 response['signature_status'] = 'Not signed'
         except Exception as e:
             response['error'] = str(e)
+        if data:
+            try:
+                file = SignatureValidator.rip_file_from_xml(doc.document)
+                response['rip_status'] = 'OK'
+                if file:
+                    response['rip_id'] = file
+            except Exception as e:
+                response['file': f'error: {str(e)}']
         return JsonResponse(response)
 
 
