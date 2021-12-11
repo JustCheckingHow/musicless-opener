@@ -1,9 +1,11 @@
 {
     "file": [
         {
-            "extension": "XML 1.0 document, Non-ISO extended-ASCII text",
-            "valid_schema": true,
-            "xml": "<xml><xd>\u00e9</xd></xml>",
+            "pk": 10,
+            "title": "asd",
+            "uploaded_at": "2021-12-11T15:45:32.878Z",
+            "valid": false,
+            "real_extension": "XML 1.0 document, Non-ISO extended-ASCII text",
             "id": 1
         },
         {

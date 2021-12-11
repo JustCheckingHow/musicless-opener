@@ -18,6 +18,7 @@ function App() {
                 Opener
             </h2>
             <DropFileInput
+                upload_endpoint="http://localhost:8000/chunked_upload"
                 onFileChange={(files) => onFileChange(files)}
             />
         </div>
