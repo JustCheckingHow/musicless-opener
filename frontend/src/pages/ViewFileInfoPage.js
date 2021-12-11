@@ -1,6 +1,7 @@
 import './App.css';
 
-import DropFileInput from './components/DropFileInput';
+
+import ViewFileInfo from '../components/ViewFileInfo';
 
 function App() {
 
@@ -11,9 +12,9 @@ function App() {
     return (
         <div className="box">
             <h2 className="header">
-                Opener
+                File type
             </h2>
-            <DropFileInput
+            <ViewFileInfo
                 onFileChange={(files) => onFileChange(files)}
             />
         </div>
