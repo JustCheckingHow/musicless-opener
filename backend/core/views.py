@@ -56,6 +56,9 @@ class ChunkedUpload(ChunkedUploadView):
     authentication_classes = []
     permission_classes = []
 
+    def check_permissions(self, request):
+        pass
+
     def on_completion(self, uploaded_file, request):
         doc = Document.objects.create(title=uploaded_file.name, document=uploaded_file)
         return JsonResponse({'file_pk': doc.pk})
