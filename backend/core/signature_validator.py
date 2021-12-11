@@ -1,5 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+from lxml import etree
+import base64
+from io import BytesIO
+from core.models import Document
 
 
 class SignatureValidator:
@@ -88,3 +92,65 @@ class SignatureValidator:
             return parsed
         else:
             return None
+
+    @staticmethod
+    def parse_response(resp):  # Returns raport 
+
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        data = soup.find_all('pre')
+        data = list(map(lambda x: x.text, data))
+
+        return data
+
+    @staticmethod
+    def is_signed(data):
+        if data.find('<ds:Signature') == -1:
+            return False
+        return True
+
+    @classmethod
+    def run(cls, file):
+        """Returns signature reports or None
+
+        Args:
+            file (TextIoWrapper): input file
+
+        Returns:
+            list|None: list of two xml reports or None if file isn't signed
+        
+        Raises:
+            A lot of stuff, execute only in try block
+        """
+        if cls.is_signed(file.read()):
+            response = cls.request_validation(file)
+            parsed = cls.parse_response(response)
+            return parsed
+        else:
+            return None
+    
+    @classmethod
+    def rip_file_from_xml(cls, file):
+        tree = etree.parse(file)
+        root = tree.getroot()
+        xpath_data = root.xpath('.//str:DaneZalacznika', namespaces = root.nsmap)
+        xpath_format = root.xpath('.//str:Zalacznik', namespaces = root.nsmap)
+        if len(xpath_data) == 1 and len(xpath_format) == 1:
+            data_field = xpath_data[0]
+            format_field = xpath_format[0]
+        else:
+            return
+        
+        data_bytes = base64.b64decode(data_field.text)
+        file_format = format_field.get('format')
+        extension = file_format.rsplit('/', 1)[1]
+
+        # file = BytesIO(data_bytes)
+
+        doc = Document.objects.create(
+            title=f'file.{extension}',
+            document = data_bytes, # file,
+            valid = True,
+            real_extension = extension
+        )
+
+        return doc.pk

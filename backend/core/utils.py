@@ -30,14 +30,18 @@ def _get_schemas(url):
     schemas = [
         link.get('href')
         for link in links
-        if link.get('href').endswith('.xsd')]
+        if  link.get('href') and link.get('href').endswith('.xsd')]
     schemas = list(map(
         lambda x: url + x[2:] if 'http' not in x else x,
         schemas))
+
     return schemas
 
 
 def is_schema_correct(xml_file_path):
+    def _generate_xsl_link(url):
+        return url.replace('.xsd', '.xsl')
+
     schemas = []
     for url in _get_schema_links(xml_file_path):
         schemas = [*schemas, *_get_schemas(url)]
@@ -53,6 +57,6 @@ def is_schema_correct(xml_file_path):
         except Exception:
             pass
     else:
-        return False, None
+        return False, None, None
 
-    return True, schema_url
+    return True, schema_url, _generate_xsl_link(schema_url)

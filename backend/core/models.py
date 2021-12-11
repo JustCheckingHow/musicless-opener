@@ -11,5 +11,7 @@ class Document(models.Model):
     valid = models.BooleanField(default=False)
     # If valid, the url of valid template, else None
     template_url = models.CharField(max_length=255, blank=True, null=True)
+    # XML stylisation of the document
+    xsl_url = models.CharField(max_length=255, blank=True, null=True)
     # File's raw output
     real_extension = models.CharField(max_length=512, blank=True)

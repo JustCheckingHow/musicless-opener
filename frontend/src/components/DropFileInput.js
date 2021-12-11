@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-
 import './drop-file-input.css';
 
 import { ImageConfig } from '../config/ImageConfig'; 
@@ -41,31 +40,36 @@ const DropFileInput = props => {
     }
 
     const onBtnClick = (e) => {
-        let tmp = new FormData();
-        tmp.append('file', fileList[0]);
-
-        axios.post(
-            'http://localhost:8000/opener',
-            tmp,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }
-        ).catch((error) => {
-            if (error.request) {
-                console.log(error.request);
-                // request sent, no response
-            } else if (error.response) {
-                console.log(error.response);
-
-                // error response
-            }
-            // console.error(error);
-        }).then((response) => {
-            console.log(response);
-            window.location.href = '/opener/' + response.data.file_pk;
+        const forms = fileList.map(item => {
+            let dat = new FormData();
+            dat.append('file', item);
+            return (dat);
         })
+
+        for (const item of forms) {
+            axios.post(
+                'http://localhost:8000/opener',
+                item,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).catch((error) => {
+                if (error.request) {
+                    console.log(error.request);
+                    // request sent, no response
+                } else if (error.response) {
+                    console.log(error.response);
+    
+                    // error response
+                }
+                // console.error(error);
+            }).then((response) => {
+                console.log(response);
+                window.location.href = '/opener/' + response.data.file_pk;
+            })
+        }
     }
 
     return (
@@ -79,7 +83,7 @@ const DropFileInput = props => {
             >
                 <div className="drop-file-input__label">
                     <img src={uploadImg} alt="" />
-                    <p>Sprawdź pliki</p>
+                    <p>Sprawdź plik</p>
                 </div>
                 <input type="file" value="" onChange={onFileDrop}/>
             </div>
@@ -87,7 +91,7 @@ const DropFileInput = props => {
                 fileList.length > 0 ? (
                     <div className="drop-file-preview">
                         <p className="drop-file-preview__title">
-                            Gotowe pliki do sprawdzenia
+                            Gotowy plik do sprawdzenia
                         </p>
                         {
                             fileList.map((item, index) => (
@@ -102,7 +106,7 @@ const DropFileInput = props => {
                             ))
                         }
                         <button className='drop-file-btn' onClick={onBtnClick}>
-                            Prześlij pliki
+                            Prześlij plik
                         </button>
                     </div>
                 ) : null
