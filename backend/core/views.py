@@ -53,6 +53,8 @@ class FileContents(View):
 
 
 class ChunkedUpload(ChunkedUploadView):
+    authentication_classes = []
+    permission_classes = []
 
     def on_completion(self, uploaded_file, request):
         doc = Document.objects.create(title=uploaded_file.name, document=uploaded_file)
