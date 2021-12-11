@@ -55,5 +55,5 @@ class FileContents(View):
 class ChunkedUpload(ChunkedUploadView):
 
     def on_completion(self, uploaded_file, request):
-        print(uploaded_file)
-        return JsonResponse({'status': 'ok'})
+        doc = Document.objects.create(title=uploaded_file.name, document=uploaded_file)
+        return JsonResponse({'file_pk': doc.pk})
