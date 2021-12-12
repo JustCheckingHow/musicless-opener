@@ -30,7 +30,7 @@ class Opener(View):
             magic_data = magic.from_file(path, mime=True)
             document.real_extension = magic_data
 
-            if magic_data.split()[0].lower() == 'xml':
+            if 'xml' in magic_data:
                 document.valid, document.template_url, document.xsl_url = is_schema_correct(path)
 
             document.save()
@@ -114,7 +114,6 @@ class ReportPDF(TemplateView):
         context['doc'] = doc
 
         return context
-
 
 
 # class ReportPDF(PDFView):
