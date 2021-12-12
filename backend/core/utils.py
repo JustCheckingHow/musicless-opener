@@ -1,4 +1,4 @@
-from core.filetypes import extension_data, app_icons
+from core.filetypes import extension_data  #, app_icons
 from django.conf import settings
 from bs4 import BeautifulSoup
 import requests
@@ -31,7 +31,7 @@ def _get_schemas(url):
     schemas = [
         link.get('href')
         for link in links
-        if  link.get('href') and link.get('href').endswith('.xsd')]
+        if link.get('href') and link.get('href').endswith('.xsd')]
     schemas = list(map(
         lambda x: url + x[2:] if 'http' not in x else x,
         schemas))
@@ -71,7 +71,11 @@ def get_openable_by_info(doc):
         if aux:
             break
 
-    return aux['logo'], list(aux['logos'].keys())
+    try:
+        return aux['logo'], list(aux['logos'].keys())
+    except KeyError:
+        pass
+    return None, None
 
 
 def get_filename_extension(filename):

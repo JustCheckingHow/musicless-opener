@@ -114,31 +114,8 @@ class ChunkedUpload(ChunkedUploadView):
         return JsonResponse({'file_pk': doc.pk})
 
 
-# class ReportPDF(TemplateView):
-#     template_name = 'report.html'
-
-#     def get_context_data(self, *args, **kwargs):
-#         context = super().get_context_data(*args, **kwargs)
-#         doc = get_object_or_404(Document, pk=self.kwargs['pk'])
-#         context['doc'] = doc
-
-#         extension_logo, openable_by = get_openable_by_info(doc)
-
-#         context['openable_by'] = ' | '.join(list(map(lambda x: x.replace('_', ' '), openable_by)))
-#         declared_ext = get_filename_extension(doc.title)
-#         context['extension_diff'] = declared_ext if declared_ext else '(no extension)' + ' vs ' + doc.real_extension
-
-#         return context
-
-
-class ReportPDF(PDFView):
+class ReportPDF(TemplateView):
     template_name = 'report.html'
-    prompt_download = True
-
-    @property
-    def download_name(self) -> str:
-        doc = get_object_or_404(Document, pk=self.kwargs['pk'])
-        return f'{doc.title}_report.pdf'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -152,3 +129,26 @@ class ReportPDF(PDFView):
         context['extension_diff'] = declared_ext if declared_ext else '(no extension)' + ' vs ' + doc.real_extension
 
         return context
+
+
+# class ReportPDF(PDFView):
+#     template_name = 'report.html'
+#     prompt_download = True
+
+#     @property
+#     def download_name(self) -> str:
+#         doc = get_object_or_404(Document, pk=self.kwargs['pk'])
+#         return f'{doc.title}_report.pdf'
+
+#     def get_context_data(self, *args, **kwargs):
+#         context = super().get_context_data(*args, **kwargs)
+#         doc = get_object_or_404(Document, pk=self.kwargs['pk'])
+#         context['doc'] = doc
+
+#         extension_logo, openable_by = get_openable_by_info(doc)
+
+#         context['openable_by'] = ' | '.join(list(map(lambda x: x.replace('_', ' '), openable_by)))
+#         declared_ext = get_filename_extension(doc.title)
+#         context['extension_diff'] = declared_ext if declared_ext else '(no extension)' + ' vs ' + doc.real_extension
+
+#         return context
