@@ -105,29 +105,29 @@ class ChunkedUpload(ChunkedUploadView):
         return JsonResponse({'file_pk': doc.pk})
 
 
-class ReportPDF(TemplateView):
-    template_name = 'report.html'
+# class ReportPDF(TemplateView):
+#     template_name = 'report.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         doc = get_object_or_404(Document, pk=self.kwargs['pk'])
+#         context['doc'] = doc
+
+#         return context
+
+
+class ReportPDF(PDFView):
+    template_name = 'report.html'
+    prompt_download = True
+
+    @property
+    def download_name(self) -> str:
+        doc = get_object_or_404(Document, pk=self.kwargs['pk'])
+        return f'{doc.title}_report.pdf'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
         doc = get_object_or_404(Document, pk=self.kwargs['pk'])
         context['doc'] = doc
 
         return context
-
-
-# class ReportPDF(PDFView):
-#     template_name = 'report.html'
-#     prompt_download = True
-
-#     @property
-#     def download_name(self) -> str:
-#         doc = get_object_or_404(Document, pk=self.kwargs['pk'])
-#         return f'{doc.title}_report.pdf'
-
-#     def get_context_data(self, *args, **kwargs):
-#         context = super().get_context_data(*args, **kwargs)
-
-#         context = {'asd': 'zxc'}
-
-#         return context
