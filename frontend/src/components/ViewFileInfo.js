@@ -18,7 +18,8 @@ const ViewFileInfo = props => {
     const [result, setResult] = useState({});
     const [active, setActive] = useState('');
     const [content_result, setContentResult] = useState('');
-    const [pdf_report, SetPdfReport] = useState('');
+    const [pdf_report, setPdfReport] = useState('');
+    const [pdf_endpoint, setPdfEndpoint] = useState('');
 
     useEffect(() => {
         if (active == match.params.id)
@@ -66,14 +67,14 @@ const ViewFileInfo = props => {
             )
 
         setActive(match.params.id);
-
+        setPdfEndpoint("http://localhost:8000/pdf_report/" + match.params.id);
 
         fetch("pdf_report/" + match.params.id)
             .then(res => res.json())
             .then(
                 (pdf_report) => {
                     console.log(pdf_report);
-                    SetPdfReport(pdf_report);
+                    setPdfReport(pdf_report);
                   })
     });
 
@@ -105,9 +106,9 @@ const ViewFileInfo = props => {
                     <a href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" className="d-block position-relative text-dark text-uppercase collapsible-link py-2">
                       <strong>Poprawność</strong>: {getValidityString(result.valid)}
                       </a>
-                      {/* <a href="http://localhost" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" className="d-block position-relative text-dark text-uppercase collapsible-link py-2">
-                      <strong>Pobierz raport</strong>: {getValidityString(result.valid)}
-                      </a> */}
+                      <a href={pdf_endpoint}>
+                      Pobierz raport
+                      </a>
                     </h6>
                 </div>
                 
@@ -125,56 +126,6 @@ const ViewFileInfo = props => {
           </div>
         </div>
       </div>
-      
-        // <MDBContainer className="mx-auto" style={{ backgroundColor: "#f5f8ff" }}>
-        //     <MDBRow className="my-3">
-        //         <MDBCol className="col col-12">
-        //             <MDBCard className="shadow p-3" style={{ backgroundColor: "white" }}>
-        //                 <MDBCardTitle>
-        //                     <h3 className="text-center">
-        //                         <i className="fas fa-file-alt"></i>
-        //                         &nbsp;&nbsp;&nbsp;
-        //                         {result.title}
-        //                     </h3>
-        //                 </MDBCardTitle>
-        //                 <MDBCardBody className="px-3">
-        //                     <MDBRow>
-        //                         <MDBCol className="col-4">
-        //                             <strong>Typ pliku</strong>
-        //                         </MDBCol>
-        //                         <MDBCol className="col-8">
-        //                             {result.real_extension}
-        //                         </MDBCol>
-        //                     </MDBRow>
-        //                     <MDBRow>
-        //                         <MDBCol className="col-4">
-        //                             <strong>Poprawność</strong>
-        //                         </MDBCol>
-        //                         <MDBCol className="col-8">
-        //                             {getValidityString(result.valid)}
-        //                         </MDBCol>
-        //                     </MDBRow>
-        //                 </MDBCardBody>
-        //             </MDBCard>
-        //         </MDBCol>
-        //     </MDBRow>
-        //     <MDBRow className="my-3">
-        //         <MDBCol className="col col-12">
-        //             <MDBCard className="shadow p-3" style={{ backgroundColor: "white" }}>
-        //                 <MDBCardTitle>
-        //                     <h3 className="text-center">
-        //                         <i className="fas fa-file-alt"></i>
-        //                         &nbsp;&nbsp;&nbsp;
-        //                         Zawartość
-        //                     </h3>
-        //                 </MDBCardTitle>
-        //                 <MDBCardBody className="px-3">
-        //                     {result.valid ? <MyXmlDocument xmlString={result.xml} /> : <p>Plik nieprawidłowy</p>}
-        //                 </MDBCardBody>
-        //             </MDBCard>
-        //         </MDBCol>
-        //     </MDBRow>
-        // </MDBContainer>
     );
 }
 
