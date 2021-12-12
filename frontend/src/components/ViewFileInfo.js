@@ -30,21 +30,46 @@ const ViewFileInfo = props => {
                 (result) => {
                     console.log(result);
                     setResult(result);
+
+
+                    console.log(props.content_endpoint + "/" + match.params.id);
+                    console.log(result.real_extension)
+
+                    if (result.real_extension == 'text/plain') {
+                      fetch(props.content_endpoint + "/" + match.params.id)
+                          .then(res => res.text())
+                          .then(
+                              (content_result) => {
+                                console.log(content_result);
+            
+                                  setContentResult(content_result);
+                              }
+                          )
+                    } 
+                    else if (result.real_extension == 'text/xml') {
+                      fetch(props.content_endpoint + "/" + match.params.id)
+                          .then(res => res.text())
+                          .then(
+                              (content_result) => {
+                                console.log(content_result);
+            
+                                  setContentResult(content_result);
+                              }
+                          )
+                    } 
+                    else {
+                      setContentResult('Plik nie jest w formacie do wyświetlenia.')
+                    }
+
                 }
             )
         
-        console.log(props.content_endpoint + "/" + match.params.id);
-        // if (result.)
-        fetch(props.content_endpoint + "/" + match.params.id)
-            .then(res => res.text())
-            .then(
-                (content_result) => {
-                  console.log(content_result);
 
-                    setContentResult(content_result);
-                }
-            )
+            
+
         setActive(match.params.id);
+
+        
     });
 
     function getValidityString(valid) {
