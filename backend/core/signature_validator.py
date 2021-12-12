@@ -5,10 +5,16 @@ import base64
 from io import BytesIO
 from core.models import Document
 from endesive import pdf
+import magic
 
 
 class SignatureValidator:
     API_URL = "https://ec.europa.eu/cefdigital/DSS/webapp-demo/validation"
+
+    @staticmethod
+    def get_file_extension(file):
+        magic_data = magic.from_file(file.name, mime=True)
+        return magic_data
 
     @classmethod
     def request_validation(cls, file):
@@ -73,6 +79,14 @@ class SignatureValidator:
         if data.find('<ds:Signature') == -1:
             return False
         return True
+
+    @classmethod
+    def validate_file(cls, file):
+        extension = cls.get_file_extension(file)
+        if extension == 'xml':
+            return cls.validate_xml(file)
+        elif extension == 'pdf':
+            return cls.validate_pdf(file)
 
     @classmethod
     def validate_xml(cls, file):
