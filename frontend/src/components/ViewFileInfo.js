@@ -72,11 +72,23 @@ const ViewFileInfo = props => {
         
     });
 
-    function getValidityString(valid) {
-        if (valid)
-            return (<span style={{ color: "green" }}>Plik wysłany poprawnie</span>);
+    // function toggleInfo() {
+    //   console.log("dupa")
+    //   // var x = document.getElementById("collapseOne");
+    //   // if (x.style.display === "none") {
+    //   //   x.style.display = "block";
+    //   // } else {
+    //   //   x.style.display = "none";
+    //   // }
+    // }
 
-        return (<span style={{ color: "red" }}>Błąd w pliku XML</span>);
+    function getValidityString(valid) {
+      if (result.real_extension == 'text/xml') {
+          if (valid)
+              return (<span style={{ color: "green" }}>Plik XML wysłany poprawnie</span>);
+
+          return (<span style={{ color: "red" }}>Błąd w pliku XML</span>);
+      }
     };
 
     return (
@@ -93,16 +105,17 @@ const ViewFileInfo = props => {
             <div id="accordionExample" class="accordion shadow">
       
               <div class="card">
-                <div id="headingOne" class="card-header bg-white shadow-sm border-0">
-                  <h6 class="mb-0 font-weight-bold"><a href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="d-block position-relative text-dark text-uppercase collapsible-link py-2">
+                <div id="headingOne" class="clickbox card-header bg-white shadow-sm border-0">
+                  <h6 class="mb-0 font-weight-bold">
+                    <a href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" className="d-block position-relative text-dark text-uppercase collapsible-link py-2">
                       <strong>Poprawność</strong>: {getValidityString(result.valid)}
-                      </a></h6>
+                      </a>
+                      </h6>
                 </div>
                 <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordionExample" class="collapse show">
                   <div class="card-body p-5">
                     <p class="font-weight-light m-0"></p>
                     <p>
-
                       {content_result}
                     </p>
                   </div>
