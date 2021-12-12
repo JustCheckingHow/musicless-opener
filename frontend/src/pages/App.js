@@ -14,9 +14,9 @@ function App() {
     return (
         <Layout>
         <div className="box mx-auto">
-            <h2 className="header">
+            {/* <h2 className="header">
                 Opener
-            </h2>
+            </h2> */}
             <DropFileInput
                 upload_endpoint="http://localhost:8000/opener"
                 onFileChange={(files) => onFileChange(files)}

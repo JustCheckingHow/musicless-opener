@@ -104,9 +104,11 @@ const DropFileInput = props => {
                                 </div>
                             ))
                         }
-                        <button className='drop-file-btn mx-auto' onClick={onBtnClick}>
-                            Prześlij pliki
-                        </button>
+                        <div className='mx-auto'>
+                            <button className='drop-file-btn mx-auto' onClick={onBtnClick}>
+                                Prześlij pliki
+                            </button>
+                        </div>
                     </div>
                 ) : null
             }
