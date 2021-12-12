@@ -6,7 +6,7 @@ $ cd frontend && npm install
 ```
 
 # Starting the project
-Enterz the project and run commands:
+Enter the project and run commands:
 ```bash
 $ docker-compose build
 $ docker-compose up
