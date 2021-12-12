@@ -51,7 +51,7 @@
         <h1 class="display-4">{{ doc.title }}</h1>
         <p class="lead">{{ doc.real_extension }}</p>
         <hr class="my-4">
-        <p>Created at: {{ doc.created_at | date:'d-m-Y H:m:s'}}</p>
+        <p>Created at: {{ doc.uploaded_at | date:'d-m-Y H:m:s'}}</p>
     </div>
 
     <div class="row text-center">
@@ -59,14 +59,14 @@
             <div>
                 <div class="card-body">
                     <h5 class="card-title">Size</h5>
-                    <p class="card-text">15Mb</p>
+                    <p class="card-text">{{ doc.document.size|filesizeformat }}</p>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
             <div>
                 <div class="card-body">
-                    <h5 class="card-title">Electronic signature</h5>
+                    <h5 class="card-title">Electronic signature data</h5>
                     <p class="card-text">12345678</p>
                 </div>
             </div>
@@ -75,7 +75,7 @@
             <div>
                 <div class="card-body">
                     <h5 class="card-title">Format discrepancy</h5>
-                    <p class="card-text">XML vs JPG</p>
+                    <p class="card-text">{{ extension_diff }}</p>
                 </div>
             </div>
         </div>
@@ -86,15 +86,21 @@
             <div>
                 <div class="card-body">
                     <h5 class="card-title">Compatible software</h5>
-                    <p class="card-text">MS Word | Notepad | ...</p>
+                    <p class="card-text">{{ openable_by }}</p>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
             <div>
                 <div class="card-body">
-                    <h5 class="card-title">Compatibility of .xml vs .xsd</h5>
-                    <p class="card-text">Not compatible</p>
+                    <h5 class="card-title">Compatibility of .xml and .xsd</h5>
+                    <p class="card-text">
+                        {% if doc.valid %}
+                            Compatible
+                        {% else %}
+                            Not compatible
+                        {% endif %}
+                    </p>
                 </div>
             </div>
         </div>
@@ -102,7 +108,7 @@
             <div>
                 <div class="card-body">
                     <h5 class="card-title">Schema link</h5>
-                    <p class="card-text"><a href="#">Schema</a></p>
+                    <p class="card-text"><a href="{{ doc.template_url }}">{{ doc.template_url }}</a></p>
                 </div>
             </div>
         </div>

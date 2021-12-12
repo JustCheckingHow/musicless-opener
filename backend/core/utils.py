@@ -1,3 +1,4 @@
+from core.filetypes import extension_data, app_icons
 from django.conf import settings
 from bs4 import BeautifulSoup
 import requests
@@ -60,3 +61,22 @@ def is_schema_correct(xml_file_path):
         return False, None, None
 
     return True, schema_url, _generate_xsl_link(schema_url)
+
+
+def get_openable_by_info(doc):
+    ext_list = doc.real_extension.lower().split('/')
+    aux = None
+    for ext in ext_list:
+        aux = extension_data.get(ext)
+        if aux:
+            break
+
+    return aux['logo'], list(aux['logos'].keys())
+
+
+def get_filename_extension(filename):
+    filename_extension = filename.split('.')[-1]
+    if filename_extension in extension_data:
+        return filename_extension
+    else:
+        return None

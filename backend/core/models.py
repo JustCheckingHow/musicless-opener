@@ -15,4 +15,3 @@ class Document(models.Model):
     xsl_url = models.CharField(max_length=255, blank=True, null=True)
     # File's raw output
     real_extension = models.CharField(max_length=512, blank=True)
-    # TODO: add size field
