@@ -34,6 +34,7 @@ const ViewFileInfo = props => {
             )
         
         console.log(props.content_endpoint + "/" + match.params.id);
+        // if (result.)
         fetch(props.content_endpoint + "/" + match.params.id)
             .then(res => res.text())
             .then(
@@ -76,6 +77,7 @@ const ViewFileInfo = props => {
                   <div class="card-body p-5">
                     <p class="font-weight-light m-0"></p>
                     <p>
+
                       {content_result}
                     </p>
                   </div>
