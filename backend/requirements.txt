@@ -2,6 +2,7 @@ Django==3.2.9
 django-chunked-upload
 python-magic
 django-cors-headers
+django_renderpdf
 requests
 beautifulsoup4
 xmlschema

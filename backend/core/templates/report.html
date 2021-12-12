@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Report: {{ doc.title }}</title>
+
+    <style type="text/css" media="all">
+
+        @page {
+            margin: 1.0cm;
+            margin-top: 3cm;
+            margin-bottom: 2.2cm;
+            font-family: 'Hilda-Regular';
+            font-size: 11px;
+            white-space: pre;
+        }
+
+        body {
+            font-family: Tahoma, Geneva, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.2px;
+            word-spacing: 2px;
+            font-weight: normal;
+            text-decoration: none;
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+    </style>
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top text-center">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Opener</a>
+        </div>
+    </nav>
+
+
+    <div class="jumbotron text-center">
+        <h1 class="display-4">{{ doc.title }}</h1>
+        <p class="lead">{{ doc.real_extension }}</p>
+        <hr class="my-4">
+        <p>Created at: {{ doc.created_at | date:'d-m-Y H:m:s'}}</p>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-sm-4">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">Size</h5>
+                    <p class="card-text">15Mb</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">Electronic signature</h5>
+                    <p class="card-text">12345678</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">Format discrepancy</h5>
+                    <p class="card-text">XML vs JPG</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center border-top">
+        <div class="col-sm-4">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">Compatible software</h5>
+                    <p class="card-text">MS Word | Notepad | ...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">Compatibility of .xml vs .xsd</h5>
+                    <p class="card-text">Not compatible</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">Schema link</h5>
+                    <p class="card-text"><a href="#">Schema</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">Binary items list</h5>
+                    <div class="card-text">
+                        <a href="#">link3</a>
+                        <a href="#">link1</a>
+                        <a href="#">link2</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="./Starter Template for Bootstrap_files/jquery-3.2.1.slim.min.js.pobrane" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="./Starter Template for Bootstrap_files/popper.min.js.pobrane"></script>
+    <script src="./Starter Template for Bootstrap_files/bootstrap.min.js.pobrane"></script>
+    
+</body>
+</html>
