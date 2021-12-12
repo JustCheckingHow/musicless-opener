@@ -27,7 +27,7 @@ class Opener(View):
             path = document.document.path
 
             # Reading from file, due to buffer size concerns
-            magic_data = magic.from_file(path)
+            magic_data = magic.from_file(path, mime=True)
             document.real_extension = magic_data
 
             if magic_data.split()[0].lower() == 'xml':
