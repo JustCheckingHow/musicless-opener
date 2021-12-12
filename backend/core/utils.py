@@ -72,3 +72,11 @@ def get_openable_by_info(doc):
             break
 
     return aux['logo'], list(aux['logos'].keys())
+
+
+def get_filename_extension(filename):
+    filename_extension = filename.split('.')[-1]
+    if filename_extension in extension_data:
+        return filename_extension
+    else:
+        return None
