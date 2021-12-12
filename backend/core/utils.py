@@ -73,7 +73,7 @@ def get_openable_by_info(doc):
 
     try:
         return aux['logo'], list(aux['logos'].keys())
-    except KeyError:
+    except Exception:
         pass
     return None, None
 

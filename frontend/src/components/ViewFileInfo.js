@@ -105,8 +105,12 @@ const ViewFileInfo = props => {
                     <a href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" className="d-block position-relative text-dark text-uppercase collapsible-link py-2">
                       <strong>Poprawność</strong>: {getValidityString(result.valid)}
                       </a>
-                      </h6>
+                      {/* <a href="http://localhost" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" className="d-block position-relative text-dark text-uppercase collapsible-link py-2">
+                      <strong>Pobierz raport</strong>: {getValidityString(result.valid)}
+                      </a> */}
+                    </h6>
                 </div>
+                
                 <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordionExample" class="collapse show">
                   <div class="card-body p-5">
                     <p class="font-weight-light m-0"></p>
