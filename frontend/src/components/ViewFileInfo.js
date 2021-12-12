@@ -17,6 +17,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 const ViewFileInfo = props => {
     const [result, setResult] = useState({});
     const [active, setActive] = useState('');
+    const [content_result, setContentResult] = useState('');
 
     useEffect(() => {
         if (active == match.params.id)
@@ -31,6 +32,17 @@ const ViewFileInfo = props => {
                     setResult(result);
                 }
             )
+        
+        console.log(props.content_endpoint + "/" + match.params.id);
+        fetch(props.content_endpoint + "/" + match.params.id)
+            .then(res => res.text())
+            .then(
+                (content_result) => {
+                  console.log(content_result);
+
+                    setContentResult(content_result);
+                }
+            )
         setActive(match.params.id);
     });
 
@@ -38,7 +50,7 @@ const ViewFileInfo = props => {
         if (valid)
             return (<span style={{ color: "green" }}>Plik wysłany poprawnie</span>);
 
-        return (<span style={{ color: "red" }}>Błąd w pliku</span>);
+        return (<span style={{ color: "red" }}>Błąd w pliku XML</span>);
     };
 
     return (
@@ -63,7 +75,9 @@ const ViewFileInfo = props => {
                 <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordionExample" class="collapse show">
                   <div class="card-body p-5">
                     <p class="font-weight-light m-0"></p>
-                    <p>Plik nieprawidłowy</p>
+                    <p>
+                      {content_result}
+                    </p>
                   </div>
                 </div>
               </div>
